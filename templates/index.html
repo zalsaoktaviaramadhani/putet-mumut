@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard VHT-S - Monitoring Survei Statistik</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <h2>📊 VHT-S</h2>
+            <p>Survey Dashboard</p>
+        </div>
+        <nav class="nav-menu">
+            <a href="#" class="nav-item active" onclick="showSection('dashboard')">
+                <span>📈</span> Dashboard
+            </a>
+            <a href="#" class="nav-item" onclick="showSection('data')">
+                <span>📋</span> Data Survei
+            </a>
+            <a href="#" class="nav-item" onclick="showSection('add')">
+                <span>➕</span> Tambah Data
+            </a>
+            <a href="#" class="nav-item" onclick="showSection('report')">
+                <span>📑</span> Laporan
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1>Sistem Digital Dashboard VHT-S</h1>
+                <!-- <p>Monitoring dan Evaluasi Data Survei Statistik</p> -->
+            </div>
+            <div class="header-right">
+                <span id="current-date"></span>
+            </div>
+        </header>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard-section" class="content-section active">
+            <!-- Statistics Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">👥</div>
+                    <div class="stat-info">
+                        <h3 id="total-respondents">0</h3>
+                        <p>Total Responden</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">⭐</div>
+                    <div class="stat-info">
+                        <h3 id="avg-score">0</h3>
+                        <p>Rata-rata Skor</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">📍</div>
+                    <div class="stat-info">
+                        <h3 id="total-locations">0</h3>
+                        <p>Lokasi Survei</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">📂</div>
+                    <div class="stat-info">
+                        <h3 id="total-categories">0</h3>
+                        <p>Kategori</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3>Distribusi Kategori Survei</h3>
+                    <canvas id="categoryChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Distribusi Gender</h3>
+                    <canvas id="genderChart"></canvas>
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-card full-width">
+                    <h3>Rata-rata Skor per Kategori</h3>
+                    <canvas id="scoreChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Section -->
+        <section id="data-section" class="content-section">
+            <div class="table-header">
+                <h2>Data Survei</h2>
+                <button class="btn-refresh" onclick="loadSurveyData()">🔄 Refresh</button>
+            </div>
+            <div class="table-container">
+                <table id="survey-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Usia</th>
+                            <th>Gender</th>
+                            <th>Lokasi</th>
+                            <th>Tanggal</th>
+                            <th>Kategori</th>
+                            <th>Skor</th>
+                            <th>Catatan</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="survey-tbody">
+                        <!-- Data akan dimuat via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Add Data Section -->
+        <section id="add-section" class="content-section">
+            <div class="form-card">
+                <h2>Tambah Data Survei Baru</h2>
+                <form id="survey-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nama Responden</label>
+                            <input type="text" name="respondent_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Usia</label>
+                            <input type="number" name="age" min="1" max="120" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <select name="gender" required>
+                                <option value="">Pilih Gender</option>
+                                <option value="Laki-laki">Laki-laki</option>
+                                <option value="Perempuan">Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Lokasi</label>
+                            <input type="text" name="location" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tanggal Survei</label>
+                            <input type="date" name="survey_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Kategori</label>
+                            <select name="category" required>
+                                <option value="">Pilih Kategori</option>
+                                <option value="Kesehatan">Kesehatan</option>
+                                <option value="Pendidikan">Pendidikan</option>
+                                <option value="Ekonomi">Ekonomi</option>
+                                <option value="Sosial">Sosial</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Skor (0-100)</label>
+                            <input type="number" name="score" min="0" max="100" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Catatan</label>
+                            <textarea name="notes" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit">💾 Simpan Data</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Report Section -->
+        <section id="report-section" class="content-section">
+            <div class="report-card">
+                <h2>Laporan Statistik VHT-S</h2>
+                <div id="report-content">
+                    <!-- Report akan dimuat via JavaScript -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="static/js/app.js"></script>
+</body>
+</html>
