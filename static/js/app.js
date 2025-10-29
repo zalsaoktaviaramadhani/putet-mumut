@@ -93,12 +93,13 @@ function initCharts() {
         options: {
             responsive: true,
             maintainAspectRatio: true,
+            aspectRatio: 1.5,
             plugins: {
                 legend: {
                     position: 'bottom',
                     labels: {
-                        padding: 15,
-                        font: { size: 12 }
+                        padding: 12,
+                        font: { size: 11 }
                     }
                 }
             }
@@ -119,12 +120,13 @@ function initCharts() {
         options: {
             responsive: true,
             maintainAspectRatio: true,
+            aspectRatio: 1.5,
             plugins: {
                 legend: {
                     position: 'bottom',
                     labels: {
-                        padding: 15,
-                        font: { size: 12 }
+                        padding: 12,
+                        font: { size: 11 }
                     }
                 }
             }
@@ -148,6 +150,7 @@ function initCharts() {
         options: {
             responsive: true,
             maintainAspectRatio: true,
+            aspectRatio: 2.5,
             scales: {
                 y: {
                     beginAtZero: true,
